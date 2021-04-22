@@ -79,26 +79,13 @@ class ClienteController extends Controller
         // we can create an instance of clientes
         $clientes = new Cliente();
 
-        // ? it works english
-        // $request->validate([
-        //     'nombre' => 'required|max:30',
-        //     'direccion' => 'required|string|email|unique:clientes|max:60',
-        //     // 'contacto' => 'required|unique:posts|max:255',
-        //     // 'telefono' => 'required|unique:posts|max:255',
-        //     // 'author.name' => 'required',
-        //     // 'author.description' => 'required',
-        // ]);
-
-        // -----
-
+        // Validations 
         $rules = array(
                 'nombre' => 'required|max:60',
                 'correo' => 'required|string|email|unique:clientes|max:60',
                 'contacto' => 'required|max:60',
-                'telefono' => 'required|max:8',
-                'direccion' => 'required|max:300',
-                // 'author.name' => 'required',
-                // 'author.description' => 'required',
+                'telefono' => 'required|integer',
+                'direccion' => 'required|max:300'
         );
 
         $validator = Validator::make($request->all(), $rules, $messages = [
@@ -114,18 +101,10 @@ class ClienteController extends Controller
             'contacto.max' => 'El Contacto ha excedido la cantidad de caracteres.',
             
             'telefono.required' => 'El Telefono es requerido.',
-            'telefono.max' => 'El Telefono ha excedido la cantidad de caracteres.'
+            'telefono.integer' => 'Telefono solo admite números.',
 
 
         ]);
-
-        // $messages = [
-        //     'nombre.required' => 'We need to know your email address!',
-        // ];
-        
-        // $validator = Validator::make($request->all(), [
-        //     'nombre' => 'required|max:30'
-        // ]);
 
         if ($validator->fails()) {
             return redirect('clientes/create')

@@ -57,7 +57,7 @@
 
     </div>
 
-    <footer class="container-fluid bg-dark p-1 text-white text-center fixed-bottom">
+    <footer class="container-fluid bg-dark p-1 text-white text-center fixed-bottom lead">
       &#169;2021
     </footer>
 

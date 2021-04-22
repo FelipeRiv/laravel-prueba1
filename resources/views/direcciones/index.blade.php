@@ -3,7 +3,7 @@
 @section('contenido')
 <h1 class="bg-success text-white rounded p-1 rounded-2">Direcciones</h1>
 
-@if (count($direcciones) === 1)
+@if (count($direcciones) >= 1)
 
     <h2>Cliente: {{$direcciones[0]->nombre}}</h2>
 
