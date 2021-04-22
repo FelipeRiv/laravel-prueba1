@@ -23,16 +23,9 @@ class ClienteController extends Controller
      */
     public function index()
     {
-
         // get all the records from dbtable cliente
-           $clientes = Cliente::all();
-           
-        // $clientes = DB::table('clientes')
-        //             ->join('direcciones', 'clientes.id', '=', 'direcciones.cliente_id')
-        //             ->select('clientes.*', 'direcciones.direccion', 'direcciones.cliente_id AS direccion_PK')
-        //             ->get();
-
-
+        $clientes = Cliente::all();
+     
         return view('cliente.index')->with('clientes', $clientes);
     }
 
@@ -136,7 +129,6 @@ class ClienteController extends Controller
 
         
         return redirect('/clientes');
-        // $clientes-> =  $request->get('');
     }
 
     /**
@@ -167,24 +159,7 @@ class ClienteController extends Controller
                    ->get();
 
         // -- Returns a collection array with 1 client so we need the function first to return the only client
-        // return view('cliente.edit')->with('cliente', $cliente);
-        return view('cliente.edit')->with('cliente', $cliente->first());
-
-         // $cliente = Cliente::find($id);
-
-         
-        // ! its changing my cliente.id por la FK
-        // ## use($id) to use the $id variable in the parameter edit($id) https://www.php.net/manual/en/functions.anonymous.php
-        // $cliente = DB::table('clientes')
-
-        //            ->join('direcciones', function ($join) use($id) {
-        //                 $join->on('clientes.id', '=', 'direcciones.cliente_id')
-        //                 // ->select('clientes.*', 'direcciones.cliente_id') // -- ver donde lo pongo
-        //                 ->where('clientes.id', '=', $id);
-        //             })
-        //         ->get();
-
-        
+        return view('cliente.edit')->with('cliente', $cliente->first());        
     }
 
     /**
@@ -205,30 +180,11 @@ class ClienteController extends Controller
 
         $cliente->save();
 
-        // TODO query para que id sea = a FK
-        
-        // get a collection
-        // $direccion = DB::table('direcciones')
-        //              ->select('direccion')
-        //              ->where('cliente_id', '=', $id)
-        //              ->get()
-        //              ->first();
-
-        // $direccion->direccion = request('correo');
-        // $direccion->save();
-
         $direccion = DB::table('direcciones')
               ->where('cliente_id', $id)
               ->update(['direccion' => $request->get('direccion')]);
 
         return redirect('/clientes');
-
-        // $direccion = Direcciones::find();
-
-
-
-        // $cliente->direccion = $request->get('direccion');
-        // $cliente-> = $request->get('');
     }
 
     /**
@@ -248,9 +204,7 @@ class ClienteController extends Controller
 
     // Ejercicio 3 retornar json con info
     public function indexJson(){
-        // $clientes = Cliente::all();
 
-        
         $clientes = DB::table('clientes')
                     ->join('direcciones', 'clientes.id', '=', 'direcciones.cliente_id')
                     ->select('*')
@@ -283,35 +237,6 @@ class ClienteController extends Controller
 
     }
 
-    // public function indexJson(){
-    //     $clientes = Cliente::all();
-
-    //     $cantidadClientes = count($clientes);
-
-    //     if ($cantidadClientes != 0 ) {
-           
-    //         $json = array(
-    
-    //             "status"=>200,
-    //             "total"=> $cantidadClientes,
-    //             "data"=>$clientes
-                
-    //         );
-    
-    //         return json_encode($json, true);
-
-    //     }else{
-
-    //         $json = array(
-    //             "status"=> "204",
-    //             "total"=> 0,
-    //             "data"=> "No data to show"
-    //         );
-
-    //         return json_encode($json);
-    //     }
-
-    // }
 
     public function indexXml() {
         
@@ -345,8 +270,6 @@ class ClienteController extends Controller
             }   
         }   
     }   
-
-
 
 
 }

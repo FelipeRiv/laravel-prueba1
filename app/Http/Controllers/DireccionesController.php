@@ -53,13 +53,6 @@ class DireccionesController extends Controller
      */
     public function show($id)
     {
-          // Returns a collection we need to access in this way $cliente[0]->id 
-        //   $direcciones = DB::table('direcciones')
-        //   ->join('clientes', 'direcciones.cliente_id', '=', 'clientes.id')
-        // //   ->select(' direcciones.id', 'direcciones.direccion', 'clientes.id AS cliente_PK', 'clientes.nombre')
-        //   ->select(' direcciones.*', 'clientes.id AS cliente_PK', 'clientes.nombre')
-        //   ->where('direcciones.cliente_id', '=', $id)
-        //   ->get();
 
           $direcciones = DB::table('clientes')
           ->join('direcciones', 'clientes.id', '=', 'direcciones.cliente_id')
@@ -68,9 +61,7 @@ class DireccionesController extends Controller
           ->get();
 
         if (!$direcciones) {
-            # code...
-            // return view('clientes.index');
-            
+        
             return redirect('/clientes');
         }
         
@@ -89,17 +80,8 @@ class DireccionesController extends Controller
     public function edit($id)
     {
         
-        // Returns a collection we need to access in this way $cliente[0]->id 
-        // $direcciones = DB::table('direcciones')
-        //            ->join('clientes', 'direcciones.cliente_id', '=', 'clientes.id')
-        //            ->select(' direcciones.id', 'direcciones.direccion', 'clientes.id AS cliente_', 'clientes.nombre')
-        //            ->where('direcciones.cliente_id', '=', $id)
-        //            ->get();
-
         // $cliente = Cliente::find($id);
-
         $direccion = Direcciones::find($id);
-
 
         // -- Returns a collection array with 1 client so we need the function first to return the only client
         // return view('cliente.edit')->with('cliente', $cliente);
@@ -116,7 +98,6 @@ class DireccionesController extends Controller
     public function update(Request $request, $id)
     {
 
-        
         $direccion = Direcciones::find($id);
 
         $direccion->direccion = $request->get('direccion');
