@@ -16,6 +16,7 @@
     <title>Clientes</title>
   </head>
   <body>
+    
     <header class="mb-2">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
         <div class="container">
@@ -69,6 +70,6 @@
     @yield('ejercicio4')
     @yield('ejercicio5')
 
-   
+  
   </body>
 </html>

@@ -19,7 +19,7 @@ class Cliente extends Model
      * relationship with cliente to direcciones hasMany https://laravel.com/docs/8.x/eloquent-relationships#one-to-many
      */
     public function direcciones() {
-        return $this->hasMany(Cliente::class);
+        return $this->hasMany(Direcciones::class);
     }
 
 }

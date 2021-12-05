@@ -25,8 +25,15 @@ class ClienteController extends Controller
     {
         // get all the records from dbtable cliente
         $clientes = Cliente::all();
-     
+        $this->debug_to_console($clientes);
         return view('cliente.index')->with('clientes', $clientes);
+    }
+
+    function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output)) $output = implode(',', $output);
+    
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
     }
 
     /**
@@ -95,8 +102,6 @@ class ClienteController extends Controller
             
             'telefono.required' => 'El Telefono es requerido.',
             'telefono.integer' => 'Telefono solo admite números.',
-
-
         ]);
 
         if ($validator->fails()) {
@@ -158,8 +163,19 @@ class ClienteController extends Controller
                    ->where('clientes.id', '=', $id)
                    ->get();
 
+        $this->debug_to_console($cliente);
+
+        if (count($cliente) === 0) {
+            $cliente = Cliente::find($id);
+        }else{
+            $cliente = $cliente->first();
+        }
+
         // -- Returns a collection array with 1 client so we need the function first to return the only client
-        return view('cliente.edit')->with('cliente', $cliente->first());        
+        return view('cliente.edit')->with('cliente', $cliente);        
+        
+        // $direcAux = Cliente::find($id)->direcciones;
+        // $this->debug_to_console($direcAux);
     }
 
     /**
@@ -181,7 +197,7 @@ class ClienteController extends Controller
         $cliente->save();
 
         $direccion = DB::table('direcciones')
-              ->where('cliente_id', $id)
+              ->where('cliente_id', $id) // ! id del direccion
               ->update(['direccion' => $request->get('direccion')]);
 
         return redirect('/clientes');
@@ -244,13 +260,13 @@ class ClienteController extends Controller
         
         $clientes =  DB::table('clientes')
                     ->join('direcciones', 'clientes.id', '=', 'direcciones.cliente_id')
-                    ->select('*')
+                    ->select('*') // ! especificar campos + headers json
                     ->get();
 
         $clientes = json_decode($clientes, true);
         
         $xml = new \SimpleXMLElement('<clientes/>');
-        $this->to_xml($xml, $clientes, 'cliente-');
+        $this->to_xml($xml, $clientes, 'cliente');
         return $xml->asXml();
 
     }
@@ -258,7 +274,7 @@ class ClienteController extends Controller
     private function to_xml(SimpleXMLElement $object, array $data, $titleItem ="") {   
         foreach ($data as $key => $value) {
             if (is_array($value)) {
-                $new_object = $object->addChild( $titleItem . $key);
+                $new_object = $object->addChild( $titleItem);
                 $this->to_xml($new_object, $value);
             } else {
                 // if the key is an integer, it needs text with it to actually work.

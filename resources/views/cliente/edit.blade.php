@@ -4,6 +4,7 @@
 
 <h1 class="p-2 rounded text-white bg-info">Editar Cliente</h1>
 
+
 <form action="/clientes/{{$cliente->id}}" method="POST">
 
     @csrf
@@ -29,10 +30,14 @@
         <input id="telefono" name="telefono" type="text" class="form-control" value="{{$cliente->telefono}}" tabindex="4">
     </div>
 
-    <div class="form-group">
-        <label for="direccion">Dirección</label>
-        <input id="direccion" name="direccion" type="text" class="form-control" value="{{$cliente->direccion}}" tabindex="4">
-    </div>
+    
+    @if ($cliente->direccion)
+        <div class="form-group">
+            <label for="direccion">Dirección</label>
+            <input id="direccion" name="direccion" type="text" class="form-control" value="{{$cliente->direccion}}" tabindex="4">
+        </div>
+    @endif
+
 
     <div class="mt-2">
         <a href="/clientes" class="btn btn-secondary" tabindex="">Cancelar</a>

@@ -36,7 +36,9 @@
                         @csrf
                         @method('DELETE')
                         
-                        <a href="/clientes/{{$cliente->id}}/edit" class="btn btn-outline-warning col-12 col-xl-4 my-1 ">Editar</a>
+                        <a href="/clientes/{{$cliente->id}}/edit" class="btn btn-outline-warning col-12 col-xl-4 my-1 ">Editar
+                        </a>
+                        
                         <button type="submit" class="btn btn-outline-danger col-12 col-xl-5">Eliminar</button>
                     </form>
     
